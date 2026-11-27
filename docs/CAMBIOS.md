@@ -8,6 +8,8 @@ entrega final.
 |---|---|---|---|---|
 | 26/11/2026 | 1 | Se rehace el Sprint 1 con código más sencillo, ajustado a lo visto en clase | La primera versión usaba Spring Security, JWT y Mockito, que no se han dado | — |
 | 26/11/2026 | 1 | Java 21 en lugar de Java 25 (provisional) | Es el JDK instalado en el equipo; se cambia al instalar el 25 | Tabla de tecnologías, si no se llega a cambiar |
+| 27/11/2026 | 1 | Paquetes numerados como en Acceso a Datos (`o0dto`, `o1controller`, `o2service`, `o3repository`) | Es la organización vista en clase | Apartado 10 (Codificación) |
+| 27/11/2026 | 1 | La comprobación «destinatario o evento» de `Mensaje` se deja en el `CHECK` de MySQL y en el servicio del chat (Sprint 3), no en la entidad | Simplifica la entidad; el chat no se usa hasta el Sprint 3 | — |
 | 26/11/2026 | 1 | MySQL Workbench 26.10 para gestionar la base de datos | Facilita ver tablas y ejecutar scripts sin la consola | Apartado de recursos y herramientas |
 
 ## Pendientes de decidir
