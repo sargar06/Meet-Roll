@@ -12,3 +12,6 @@ servidor/target/
 .vscode/
 .idea/
 Thumbs.db
+
+# Documentación privada del equipo (no se sube)
+docs/

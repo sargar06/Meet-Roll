@@ -19,7 +19,7 @@
     <description>Servidor de Meet&amp;Roll</description>
 
     <properties>
-        <!-- Java 21 es el JDK instalado. Cambiar a 25 cuando se instale (ver docs/CAMBIOS.md). -->
+        <!-- Java 21 es el JDK instalado. Cambiar a 25 cuando se instale. -->
         <java.version>21</java.version>
     </properties>
 
