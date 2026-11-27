@@ -22,8 +22,7 @@ propio archivo.
 | [0](00-preparacion.md) | — | Limpiar el repositorio y preparar esta documentación | Hecho |
 | [1](01-mysql.md) | #14 | Instalar MySQL 8.4 y crear la base de datos con `schema.sql` | Hecho |
 | [2](02-proyecto-spring-boot.md) | #14 | Crear el proyecto Spring Boot y conectarlo a MySQL | Hecho |
-| 3 | #15 | Entidades JPA (`Usuario`, `Evento`, `TipoEvento`, `Inscripcion`, `Mensaje`) | Pendiente |
-| 4 | #15 | Repositorios | Pendiente |
+| [3 y 4](03-entidades-repositorios.md) | #15 | Entidades JPA (`Usuario`, `Evento`, `TipoEvento`, `Inscripcion`, `Mensaje`) y repositorios | Hecho |
 | 5 | #16 | Registro de usuario (CU-01) | Pendiente |
 | 6 | #16 | Inicio de sesión (CU-02) | Pendiente |
 | 7 | #17 | Ver y editar el perfil (CU-04) | Pendiente |
