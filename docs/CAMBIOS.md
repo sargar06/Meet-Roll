@@ -13,6 +13,9 @@ entrega final.
 | 27/11/2026 | 1 | Validación de datos con `if` en el servicio, sin Bean Validation (`@NotBlank`, `@Email`) | Más fácil de seguir; es como se hace en clase | — |
 | 27/11/2026 | 1 | Paquetes numerados como en Acceso a Datos (`o0dto`, `o1controller`, `o2service`, `o3repository`) | Es la organización vista en clase | Apartado 10 (Codificación) |
 | 27/11/2026 | 1 | La comprobación «destinatario o evento» de `Mensaje` se deja en el `CHECK` de MySQL y en el servicio del chat (Sprint 3), no en la entidad | Simplifica la entidad; el chat no se usa hasta el Sprint 3 | — |
+| 27/11/2026 | 1 | Pruebas: JUnit solo para clases que no usan la base de datos (`SesionService`, BCrypt), sin Mockito; el resto se prueba con la colección de Postman contra el servidor | Mockito no se ha visto en clase; Postman prueba el servidor completo | Apartado de pruebas |
+| 27/11/2026 | 1 | Las sesiones se guardan en memoria: se pierden al reiniciar el servidor y no caducan | Consecuencia de quitar JWT; suficiente para el proyecto | Apartado 8.4, como limitación |
+| 27/11/2026 | 1 | Rama `feature/16-registro-login` en lugar de `feature/16-registro-login-jwt` | Ya no se usa JWT | — |
 | 26/11/2026 | 1 | MySQL Workbench 26.10 para gestionar la base de datos | Facilita ver tablas y ejecutar scripts sin la consola | Apartado de recursos y herramientas |
 
 ## Pendientes de decidir

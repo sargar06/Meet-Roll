@@ -27,12 +27,12 @@ propio archivo.
 | [6](06-inicio-sesion.md) | #16 | Inicio de sesión (CU-02) con token de sesión | Hecho |
 | [7](07-perfil.md) | #17 | Ver y editar el perfil (CU-04) | Hecho |
 | [8](08-pruebas.md) | #18 | Pruebas con JUnit (10 tests) y Postman (10 peticiones) | Hecho |
-| 9 | #19 | Revisión del sprint y etiqueta `sprint-1` | Pendiente |
+| [9](09-revision.md) | #19 | Revisión del sprint y etiqueta `sprint-1` | Hecho (falta la etiqueta, tras fusionar) |
 
 ## Ramas
 
 Una rama por issue, creada desde `main`: `feature/14-proyecto-base`, `feature/15-entidades-jpa`,
-`feature/16-registro-login`, `feature/17-perfil` y `feature/18-pruebas`. Cada una se cierra con una pull request
+`feature/16-registro-login`, `feature/17-perfil`, `feature/18-pruebas` y `feature/19-revision`. Cada una se cierra con una pull request
 que incluye `Closes #n`.
 
 Cada rama sale de la anterior (la #15 de la #14, etc.), porque necesita su código. Las pull requests se fusionan en
