@@ -25,7 +25,7 @@ propio archivo.
 | [3 y 4](03-entidades-repositorios.md) | #15 | Entidades JPA (`Usuario`, `Evento`, `TipoEvento`, `Inscripcion`, `Mensaje`) y repositorios | Hecho |
 | [5](05-registro.md) | #16 | Registro de usuario (CU-01) | Hecho |
 | [6](06-inicio-sesion.md) | #16 | Inicio de sesión (CU-02) con token de sesión | Hecho |
-| 7 | #17 | Ver y editar el perfil (CU-04) | Pendiente |
+| [7](07-perfil.md) | #17 | Ver y editar el perfil (CU-04) | Hecho |
 | 8 | #18 | Pruebas con Postman y JUnit | Pendiente |
 | 9 | #19 | Revisión del sprint y etiqueta `sprint-1` | Pendiente |
 

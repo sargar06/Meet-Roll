@@ -1,6 +1,7 @@
 package com.meetroll.servidor.o2service;
 
 import com.meetroll.servidor.o0dto.LoginDTO;
+import com.meetroll.servidor.o0dto.PerfilDTO;
 import com.meetroll.servidor.o0dto.RegistroDTO;
 import com.meetroll.servidor.o0dto.UsuarioDTO;
 import com.meetroll.servidor.o3repository.UsuarioRepository;
@@ -95,5 +96,47 @@ public class UsuarioService {
             return null;
         }
         return new UsuarioDTO(usuario);
+    }
+
+    /**
+     * CU-04. Devuelve los datos de un usuario, o null si no existe.
+     */
+    public UsuarioDTO obtener(Integer id) {
+        Optional<Usuario> encontrado = usuarioRepository.findById(id);
+        if (encontrado.isEmpty()) {
+            return null;
+        }
+        return new UsuarioDTO(encontrado.get());
+    }
+
+    /**
+     * CU-04. Cambia el nombre, la foto y la biografía de un usuario.
+     *
+     * @return el usuario actualizado, o null si no existe
+     * @throws IllegalArgumentException si los datos no son válidos
+     */
+    public UsuarioDTO actualizarPerfil(Integer id, PerfilDTO datos) {
+        if (datos.nombre() == null || datos.nombre().isBlank() || datos.nombre().length() > 100) {
+            throw new IllegalArgumentException("El nombre es obligatorio y tiene como máximo 100 caracteres");
+        }
+        if (datos.fotoUrl() != null && datos.fotoUrl().length() > 255) {
+            throw new IllegalArgumentException("La dirección de la foto tiene como máximo 255 caracteres");
+        }
+        if (datos.bio() != null && datos.bio().length() > 500) {
+            throw new IllegalArgumentException("La biografía tiene como máximo 500 caracteres");
+        }
+
+        Optional<Usuario> encontrado = usuarioRepository.findById(id);
+        if (encontrado.isEmpty()) {
+            return null;
+        }
+
+        Usuario usuario = encontrado.get();
+        usuario.setNombre(datos.nombre().trim());
+        usuario.setFotoUrl(datos.fotoUrl());
+        usuario.setBio(datos.bio());
+
+        // save con un usuario que ya tiene id hace un UPDATE en vez de un INSERT.
+        return new UsuarioDTO(usuarioRepository.save(usuario));
     }
 }
