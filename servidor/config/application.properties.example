@@ -1,0 +1,5 @@
+# Plantilla. Copiar como config/application.properties (ese archivo NO se sube a GitHub)
+# y escribir la contraseña del usuario meetroll de MySQL.
+# El servidor se arranca desde la carpeta servidor/ para que Spring encuentre este archivo.
+spring.datasource.username=meetroll
+spring.datasource.password=ESCRIBE_AQUI_LA_CONTRASEÑA

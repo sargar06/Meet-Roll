@@ -1,0 +1,14 @@
+# Notas locales para Claude Code (no se suben)
+CLAUDE.md
+docs/CONTEXTO_PROYECTO.md
+
+# Configuración con contraseñas (no se sube)
+servidor/config/application.properties
+
+# Salida de compilación de Maven
+servidor/target/
+
+# Editores y sistema
+.vscode/
+.idea/
+Thumbs.db
