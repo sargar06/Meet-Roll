@@ -26,7 +26,7 @@ propio archivo.
 | [5](05-registro.md) | #16 | Registro de usuario (CU-01) | Hecho |
 | [6](06-inicio-sesion.md) | #16 | Inicio de sesión (CU-02) con token de sesión | Hecho |
 | [7](07-perfil.md) | #17 | Ver y editar el perfil (CU-04) | Hecho |
-| 8 | #18 | Pruebas con Postman y JUnit | Pendiente |
+| [8](08-pruebas.md) | #18 | Pruebas con JUnit (10 tests) y Postman (10 peticiones) | Hecho |
 | 9 | #19 | Revisión del sprint y etiqueta `sprint-1` | Pendiente |
 
 ## Ramas

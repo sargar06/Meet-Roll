@@ -1,0 +1,253 @@
+{
+	"info": {
+		"name": "Meet&Roll - Sprint 1",
+		"description": "Registro (CU-01), inicio de sesión (CU-02) y perfil (CU-04). Ejecutar en orden con el servidor arrancado (mvn spring-boot:run en servidor/). El registro usa un correo nuevo en cada ejecución.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8080" },
+		{ "key": "email", "value": "" },
+		{ "key": "token", "value": "" }
+	],
+	"item": [
+		{
+			"name": "01 Registro correcto (201)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// Correo distinto en cada ejecución (con la hora actual) para no chocar con el 409",
+							"pm.collectionVariables.set('email', 'postman' + Date.now() + '@meetroll.local');"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 201', () => pm.response.to.have.status(201));",
+							"pm.test('Devuelve el usuario con id', () => pm.expect(pm.response.json().id).to.be.a('number'));",
+							"pm.test('No devuelve la contraseña', () => {",
+							"    pm.expect(pm.response.json()).to.not.have.property('password');",
+							"    pm.expect(pm.response.json()).to.not.have.property('passwordHash');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Usuario Postman\",\n  \"email\": \"{{email}}\",\n  \"password\": \"secreto123\",\n  \"organizador\": false\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/api/auth/registro", "host": ["{{baseUrl}}"], "path": ["api", "auth", "registro"] }
+			}
+		},
+		{
+			"name": "02 Registro con correo repetido (409)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 409', () => pm.response.to.have.status(409));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Otro\",\n  \"email\": \"{{email}}\",\n  \"password\": \"secreto123\",\n  \"organizador\": false\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/api/auth/registro", "host": ["{{baseUrl}}"], "path": ["api", "auth", "registro"] }
+			}
+		},
+		{
+			"name": "03 Registro con datos no válidos (400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 400', () => pm.response.to.have.status(400));",
+							"pm.test('Explica el error', () => pm.expect(pm.response.json().error).to.be.a('string'));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"\",\n  \"email\": \"no-es-un-correo\",\n  \"password\": \"corta\",\n  \"organizador\": false\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/api/auth/registro", "host": ["{{baseUrl}}"], "path": ["api", "auth", "registro"] }
+			}
+		},
+		{
+			"name": "04 Login correcto (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 200', () => pm.response.to.have.status(200));",
+							"const cuerpo = pm.response.json();",
+							"pm.test('Devuelve un token', () => pm.expect(cuerpo.token).to.be.a('string').and.not.empty);",
+							"// Se guarda el token para las peticiones siguientes",
+							"pm.collectionVariables.set('token', cuerpo.token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"secreto123\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+			}
+		},
+		{
+			"name": "05 Login con contraseña incorrecta (401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 401', () => pm.response.to.have.status(401));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"incorrecta1\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+			}
+		},
+		{
+			"name": "06 Ver perfil (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 200', () => pm.response.to.have.status(200));",
+							"pm.test('Es el usuario del token', () => pm.expect(pm.response.json().email).to.eql(pm.collectionVariables.get('email')));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+				"url": { "raw": "{{baseUrl}}/api/perfil", "host": ["{{baseUrl}}"], "path": ["api", "perfil"] }
+			}
+		},
+		{
+			"name": "07 Editar perfil (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 200', () => pm.response.to.have.status(200));",
+							"pm.test('Biografía actualizada', () => pm.expect(pm.response.json().bio).to.eql('Juego a Catan y a Magic'));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{ "key": "Authorization", "value": "Bearer {{token}}" },
+					{ "key": "Content-Type", "value": "application/json" }
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Usuario Postman editado\",\n  \"fotoUrl\": null,\n  \"bio\": \"Juego a Catan y a Magic\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/api/perfil", "host": ["{{baseUrl}}"], "path": ["api", "perfil"] }
+			}
+		},
+		{
+			"name": "08 Perfil sin token (401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 401', () => pm.response.to.have.status(401));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/api/perfil", "host": ["{{baseUrl}}"], "path": ["api", "perfil"] }
+			}
+		},
+		{
+			"name": "09 Cerrar sesión (204)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 204', () => pm.response.to.have.status(204));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+				"url": { "raw": "{{baseUrl}}/api/auth/logout", "host": ["{{baseUrl}}"], "path": ["api", "auth", "logout"] }
+			}
+		},
+		{
+			"name": "10 Perfil después de cerrar sesión (401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Código 401: el token ya no vale', () => pm.response.to.have.status(401));"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+				"url": { "raw": "{{baseUrl}}/api/perfil", "host": ["{{baseUrl}}"], "path": ["api", "perfil"] }
+			}
+		}
+	]
+}
