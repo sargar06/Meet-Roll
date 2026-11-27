@@ -1,9 +1,11 @@
 package com.meetroll.servidor.o2service;
 
+import com.meetroll.servidor.o0dto.LoginDTO;
 import com.meetroll.servidor.o0dto.RegistroDTO;
 import com.meetroll.servidor.o0dto.UsuarioDTO;
 import com.meetroll.servidor.o3repository.UsuarioRepository;
 import com.meetroll.servidor.o3repository.entidades.Usuario;
+import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +70,30 @@ public class UsuarioService {
 
         // 4. Devolver un DTO (sin la contraseña)
         return new UsuarioDTO(guardado);
+    }
+
+    /**
+     * CU-02. Comprueba el correo y la contraseña.
+     *
+     * @return los datos del usuario si son correctos, o null si no lo son.
+     *         No se distingue entre "el correo no existe" y "la contraseña está mal",
+     *         para no dar pistas de qué correos están registrados.
+     */
+    public UsuarioDTO comprobarCredenciales(LoginDTO datos) {
+        if (datos.email() == null || datos.password() == null) {
+            return null;
+        }
+
+        Optional<Usuario> encontrado = usuarioRepository.findByEmail(datos.email().trim().toLowerCase());
+        if (encontrado.isEmpty()) {
+            return null;
+        }
+
+        Usuario usuario = encontrado.get();
+        // matches cifra la contraseña escrita y la compara con la guardada.
+        if (!cifrador.matches(datos.password(), usuario.getPasswordHash())) {
+            return null;
+        }
+        return new UsuarioDTO(usuario);
     }
 }
